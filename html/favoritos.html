@@ -1,35 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Favoritos — Isaimóveis</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Favoritos — Sonho Real</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="favoritos.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/favoritos.css">
 </head>
 <body>
 
-  <header class="topo">
-    <h1>Meus Favoritos</h1>
-    <a href="index.html" class="voltar">← Voltar ao início</a>
+  <header class="top-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <div class="logo">SR</div>
+        <div>
+          <div class="site-name">Sonho<span class="accent">Real</span></div>
+          <div class="site-sub">Seus imóveis salvos</div>
+        </div>
+      </div>
+
+      <nav class="nav-actions">
+        <div class="filter-row">
+          <input id="filterBusca" class="input search-input" placeholder="Buscar por nome ou bairro..." />
+          <select id="filterCidade" class="input select">
+            <option value="">Todas as cidades</option>
+          </select>
+          <select id="filterFaixa" class="input select">
+            <option value="">Todas as faixas</option>
+            <option value="0-1000">Até 1.000</option>
+            <option value="1000-3000">1.000 - 3.000</option>
+            <option value="3000-10000">+3.000</option>
+          </select>
+        </div>
+
+        <div class="actions-right">
+          <button id="btn-signup" class="btn btn-ghost">Entrar</button>
+        </div>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <div id="listaFavoritos" class="cards-container"></div>
+  <main class="container">
+    <section class="page-head">
+      <h1 class="page-title">Meus Favoritos</h1>
+      <p class="page-desc">Aqui você encontra os imóveis que marcou com <span class="heart">♥</span></p>
+    </section>
+
+    <section id="listaFavoritos" class="grid-list">
+      <!-- skeleton / cards serão injetados aqui -->
+    </section>
+
+    <div class="pagination-row">
+      <button id="prevPage" class="btn btn-ghost">Anterior</button>
+      <div id="pageInfo" class="page-info">Página 1</div>
+      <button id="nextPage" class="btn btn-ghost">Próxima</button>
+    </div>
   </main>
 
-  <!-- Modal -->
-  <div id="modalFavorito" class="modal hidden">
-    <div class="modal-content">
-      <span class="close" onclick="fecharModal()">×</span>
-      <img id="modalImagem" src="">
-      <h2 id="modalTitulo"></h2>
-      <p id="modalDescricao"></p>
-      <p id="modalPreco"></p>
+  <!-- MODAL LATERAL -->
+  <aside id="modalDetalhes" class="modal-imovel" aria-hidden="true">
+    <div class="modal-header">
+      <h3 id="modalTitulo">Título</h3>
+      <button class="close" id="closeModal" aria-label="Fechar">✕</button>
     </div>
-  </div>
 
-  <script src="../js/favoritos.js"></script>
+    <div class="modal-body">
+      <div class="hotel-gallery">
+        <div class="main-image">
+          <img id="hotel-image" src="" alt="">
+        </div>
+        <div class="side-images" id="hotel-thumbs"></div>
+      </div>
+
+      <div class="hotel-info">
+        <div class="price" id="modalPreco"></div>
+        <div class="details" id="modalDetails"></div>
+        <div class="hotel-actions">
+          <button id="btn-solicitar" class="btn btn-primary">Solicitar visita</button>
+          <button id="btn-mensagem" class="btn btn-outline">Enviar mensagem</button>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- simples toasts -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="favoritos.js" type="module"></script>
 </body>
 </html>

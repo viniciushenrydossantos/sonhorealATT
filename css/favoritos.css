@@ -1,0 +1,160 @@
+/* ==========================================================================
+   FAVORITOS.CSS — Versão ampliada
+   Vibe: SonhoReal / Isaimóveis — cores: dourado (#C9A86A), azul escuro (#1F3A5F)
+   ========================================================================== */
+
+/* ------------- root & base ------------- */
+:root{
+  --bg: #F4F1EC;
+  --surface: #FFFFFF;
+  --muted: #9b9b9b;
+  --text: #2E2E2E;
+  --accent: #C9A86A;
+  --accent-dark: #1F3A5F;
+  --danger: #e63946;
+  --radius: 14px;
+  --card-shadow: 0 10px 30px rgba(31,58,95,0.08);
+  --glass: rgba(255,255,255,0.7);
+  --transition-fast: 160ms;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Poppins',system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  background: linear-gradient(180deg,#F8F7F5,var(--bg));
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-text-size-adjust:100%;
+}
+
+/* container */
+.container{max-width:1200px;margin:0 auto;padding:0 18px;}
+
+/* ------------- header ------------- */
+.top-header{
+  position:sticky;top:0;z-index:80;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+  border-bottom:1px solid rgba(31,58,95,0.03);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:52px;height:52px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#fff;background:linear-gradient(135deg,var(--accent-dark),var(--accent));box-shadow:0 8px 24px rgba(201,168,106,0.12)}
+.site-name{font-weight:800;color:var(--accent-dark);letter-spacing:-0.6px}
+.site-sub{font-size:12px;color:#6b6b6b}
+
+/* nav actions (filters + login) */
+.nav-actions{display:flex;gap:12px;align-items:center}
+.filter-row{display:flex;gap:10px;align-items:center}
+.input{padding:10px 12px;border-radius:10px;border:1px solid rgba(31,58,95,0.06);background:var(--surface);outline:none;min-width:160px}
+.input:focus{box-shadow:0 8px 24px rgba(31,58,95,0.06);border-color:var(--accent)}
+
+.select{appearance:none;padding-right:28px;background-image:linear-gradient(45deg,#0000 50%, #0000 50%);}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600;transition:transform var(--transition-fast),box-shadow var(--transition-fast)}
+.btn:active{transform:translateY(1px)}
+.btn-ghost{background:transparent;border:1px solid rgba(31,58,95,0.06)}
+.btn-primary{background:linear-gradient(135deg,var(--accent), #EBD9A6);color:#fff;box-shadow:0 10px 28px rgba(201,168,106,0.12)}
+.btn-outline{background:transparent;border:1px solid var(--accent-dark);color:var(--accent-dark)}
+
+/* ------------- page header ------------- */
+.page-head{padding:36px 0 8px}
+.page-title{font-size:32px;margin:6px 0 6px}
+.page-desc{color:#5a5a5a}
+
+/* ------------- grid list / skeleton ------------- */
+.grid-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;padding:22px 0 60px}
+
+/* skeleton card */
+.skeleton{
+  border-radius:var(--radius);
+  padding:18px;
+  background:linear-gradient(90deg,#fff,#fbfbfb);
+  box-shadow:var(--card-shadow);
+  overflow:hidden;
+  animation:pulse 1.2s infinite;
+}
+.skeleton .s-img{height:190px;background:linear-gradient(90deg,#eee,#f6f6f6);border-radius:12px;margin-bottom:12px}
+.skeleton .s-line{height:12px;background:#eee;border-radius:8px;margin-bottom:8px}
+.skeleton .s-line.short{width:50%}
+@keyframes pulse{0%{opacity:1}50%{opacity:.6}100%{opacity:1}}
+
+/* ------------- card (real) ------------- */
+.card-imovel{
+  background:linear-gradient(180deg,var(--surface),#FBFAF8);
+  border-radius:var(--radius);
+  box-shadow:var(--card-shadow);
+  transition:transform .25s cubic-bezier(.2,.9,.3,1),box-shadow .25s ease;
+  display:flex;flex-direction:column;overflow:hidden;border:1px solid rgba(31,58,95,0.03)
+}
+.card-imovel:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(31,58,95,0.12)}
+
+/* grid internal */
+.grid-container{display:grid;grid-template-columns:1fr 260px;gap:16px;padding:16px}
+@media(max-width:880px){.grid-container{grid-template-columns:1fr}}
+.grid-large{height:260px;border-radius:12px;overflow:hidden;background:#eee;display:flex;align-items:center;justify-content:center}
+.grid-large img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.grid-large img:hover{transform:scale(1.06)}
+.grid-small{display:flex;flex-direction:column;gap:10px}
+.grid-small img{height:calc((260px - 10px)/2);width:100%;object-fit:cover;border-radius:10px;transition:transform .25s ease}
+@media(max-width:880px){.grid-small{flex-direction:row}.grid-small img{height:120px}}
+
+/* info area */
+.info{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px 18px;gap:12px;flex-wrap:wrap}
+.info > div:first-child{flex:1 1 60%}
+.info > div:last-child{flex:0 0 220px;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.title{font-weight:700;color:var(--accent-dark);font-size:18px}
+.meta{color:#666;font-size:13px}
+.desc-short{color:#444;font-size:14px;margin-top:8px}
+
+/* card-footer */
+.card-footer{display:flex;align-items:center;gap:12px;justify-content:flex-end;width:100%}
+.price{font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-0.6px}
+
+/* favorito button */
+.btn-fav{background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:8px;border-radius:8px;min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;transition:transform .16s,color .16s}
+.btn-fav:hover{transform:scale(1.06);color:var(--danger)}
+.btn-fav.favorited{color:var(--danger);text-shadow:0 6px 24px rgba(230,57,70,0.12);transform:scale(1.03)}
+
+/* remove small action */
+.small-action{background:transparent;border:1px solid rgba(31,58,95,0.06);padding:8px 10px;border-radius:10px;cursor:pointer}
+
+/* tags / badge */
+.tag{display:inline-block;background:rgba(31,58,95,0.06);color:var(--accent-dark);padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+
+/* ------------- modal lateral ------------- */
+.modal-imovel{
+  position:fixed;top:0;right:-540px;width:540px;height:100vh;background:linear-gradient(180deg,#fff,#FBFAF8);box-shadow:-20px 0 50px rgba(31,58,95,0.12);z-index:1400;transition:right .32s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;padding:18px;border-left:1px solid rgba(31,58,95,0.03);
+}
+.modal-imovel.ativo{right:0}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid rgba(31,58,95,0.03)}
+.modal-header h3{margin:0;color:var(--accent-dark);font-size:18px}
+.modal-body{padding-top:12px;overflow:auto;flex:1}
+#hotel-image{width:100%;height:320px;object-fit:cover;border-radius:12px;box-shadow:0 12px 36px rgba(31,58,95,0.12)}
+#hotel-thumbs{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+#hotel-thumbs img{width:70px;height:70px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .18s}
+#hotel-thumbs img:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(31,58,95,0.12)}
+.modal-actions{display:flex;gap:12px;justify-content:flex-end;padding-top:12px}
+
+/* toast */
+.toast{position:fixed;right:20px;bottom:20px;background:var(--accent-dark);color:#fff;padding:10px 16px;border-radius:10px;box-shadow:0 10px 30px rgba(31,58,95,0.12);z-index:1600}
+.toast.hidden{display:none}
+
+/* pagination */
+.pagination-row{display:flex;gap:12px;align-items:center;justify-content:center;padding:18px 0}
+.page-info{font-weight:700;color:#555}
+
+/* empty state */
+.empty-state{padding:40px;border-radius:12px;text-align:center;background:linear-gradient(180deg,#fff,#fbfbfb);box-shadow:var(--card-shadow)}
+.empty-state h4{color:var(--accent-dark);margin-bottom:8px}
+
+/* responsive smaller */
+@media(max-width:640px){
+  .grid-container{grid-template-columns:1fr}
+  .info>div:last-child{flex:1 1 100%;align-items:flex-start}
+  .modal-imovel{width:100%;right:-110%}
+  .modal-imovel.ativo{right:0}
+}
