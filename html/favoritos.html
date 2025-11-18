@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favoritos — Isaimóveis</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="favoritos.css">
+</head>
+<body>
+
+  <header class="topo">
+    <h1>Meus Favoritos</h1>
+    <a href="index.html" class="voltar">← Voltar ao início</a>
+  </header>
+
+  <main>
+    <div id="listaFavoritos" class="cards-container"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modalFavorito" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">×</span>
+      <img id="modalImagem" src="">
+      <h2 id="modalTitulo"></h2>
+      <p id="modalDescricao"></p>
+      <p id="modalPreco"></p>
+    </div>
+  </div>
+
+  <script src="../js/favoritos.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Perfil</title>
+  <link rel="stylesheet" href="../css/perfil.css" />
+</head>
+<body>
+
+  <div class="perfil-container">
+
+    <div class="perfil-card">
+
+      <div class="foto-perfil">
+        <img src="https://i.imgur.com/4ZQZ4Hj.png" alt="Foto de perfil">
+      </div>
+
+      <div class="info">
+        <h2 id="nomeDisplay" class="clicavel">
+          <span id="nomeTexto">Carregando...</span> 
+          <span class="edit-icon">✏️</span>
+        </h2>
+        <input type="text" id="nomeInput" class="hidden"/>
+
+        <p id="emailDisplay">
+          <strong>Email:</strong> <span id="emailTexto">Carregando...</span>
+        </p>
+
+        <p id="bioDisplay" class="clicavel">
+          <span id="bioTexto">Clique aqui e escreva sua bio!</span> 
+          <span class="edit-icon">✏️</span>
+        </p>
+        <textarea id="bioInput" class="hidden"></textarea>
+
+        <button id="btnSalvar" class="hidden">Salvar alterações</button>
+      </div>
+    </div>
+
+    <section class="favoritos">
+      <h2>Favoritos ❤️</h2>
+      <div class="lista-favoritos">Carregando favoritos...</div>
+    </section>
+
+  </div>
+
+  <script src="../js/perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+/* ---------------------------- */
+/* 🌐 CONFIGURAÇÃO GERAL */
+/* ---------------------------- */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f2f4f8;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #004aad;
+}
+
+main {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ---------------------------- */
+/* 🏠 CARD PRINCIPAL */
+/* ---------------------------- */
+.anuncio-card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 750px;
+  transition: all 0.3s ease;
+}
+
+.anuncio-card:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+}
+
+/* ---------------------------- */
+/* 📸 UPLOAD DE IMAGENS */
+/* ---------------------------- */
+.imagem-placeholder {
+  width: 100%;
+  height: 230px;
+  background: #e5e9f2;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.imagem-placeholder:hover {
+  box-shadow: 0 0 18px rgba(0, 74, 173, 0.3);
+  transform: scale(1.02);
+}
+
+.imagem-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.imagem-placeholder span {
+  position: absolute;
+  color: #555;
+  font-style: italic;
+  z-index: 1;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.thumbnails-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.thumbnails-container img.thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------- */
+/* ✏️ CAMPOS E INPUTS */
+/* ---------------------------- */
+input, select, textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #004aad;
+  background: #eef3ff;
+}
+
+/* ---------------------------- */
+/* 🧭 ENDEREÇO */
+/* ---------------------------- */
+.endereco {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.endereco input {
+  flex: 1 1 140px;
+}
+
+/* ---------------------------- */
+/* 📐 INFORMAÇÕES GERAIS */
+/* ---------------------------- */
+.info-geral {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+/* ---------------------------- */
+/* 🏷️ SEÇÕES EXPANSÍVEIS */
+/* ---------------------------- */
+.filter-section {
+  margin-bottom: 15px;
+}
+
+.filter-section label {
+  font-weight: 600;
+  color: #004aad;
+}
+
+.filter-section.expandable {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9fafc;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.section-header:hover {
+  background: #eef3ff;
+}
+
+.section-header .toggle {
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.filter-section.expandable.open .section-header .toggle {
+  transform: rotate(180deg);
+}
+
+.tags {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+}
+
+.filter-section.expandable.open .tags {
+  display: flex;
+}
+
+/* ---------------------------- */
+/* 🔘 BOTÕES DE TAGS */
+/* ---------------------------- */
+.tags button {
+  padding: 6px 14px;
+  background: #e9ecef;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.tags button.ativo {
+  background: #004aad;
+  color: #fff;
+  border-color: #004aad;
+  box-shadow: 0 2px 8px rgba(0, 74, 173, 0.4);
+}
+
+/* ---------------------------- */
+/* 🚀 BOTÃO DE PUBLICAR */
+/* ---------------------------- */
+.btn-publicar {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 20px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+}
+
+.btn-publicar:hover {
+  background: #218838;
+}
+
+/* ---------------------------- */
+/* 🗂️ LISTA DE ANÚNCIOS */
+/* ---------------------------- */
+#listaAnuncios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 10px;
+  padding-bottom: 40px;
+}
+
+.anuncio-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  width: 280px;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.anuncio-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.anuncio-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.anuncio-item .info {
+  padding: 14px;
+}
+
+.anuncio-item h3 {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #004aad;
+}
+
+.anuncio-item p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.anuncio-item button {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 12px;
+  margin: 6px 3px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.anuncio-item button.del {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.anuncio-item button.del:hover {
+  background: #c0392b;
+}
+
+.anuncio-item button:not(.del) {
+  background: #3498db;
+  color: #fff;
+}
+
+.anuncio-item button:not(.del):hover {
+  background: #2980b9;
+}
+
+/* ---------------------------- */
+/* 📱 RESPONSIVIDADE */
+/* ---------------------------- */
+@media (max-width: 768px) {
+  .anuncio-card {
+    padding: 18px;
+  }
+
+  .imagem-placeholder {
+    height: 180px;
+  }
+
+  .endereco input {
+    flex: 1 1 100%;
+  }
+
+  #listaAnuncios {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .anuncio-item {
+    width: 90%;
+  }
+}

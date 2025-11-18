@@ -1,0 +1,138 @@
+:root {
+  --bg: #F4F4F4;
+  --card-bg: #FFFFFF;
+  --primary: #1F3A5F;
+  --accent: #C9A86A;
+  --text-dark: #333333;
+  --text-muted: #666666;
+  --btn-bg: #1F3A5F;
+  --btn-hover: #16304a;
+  --badge-bg: #C9A86A;
+  --badge-text: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-dark);
+}
+
+/* Header */
+header {
+  background-color: var(--primary);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  flex-wrap: wrap;
+}
+
+header .logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+}
+
+header nav ul li a:hover {
+  color: var(--accent);
+}
+
+/* Div imagem topo */
+.top-image {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 30px;
+  border-radius: 12px;
+}
+
+/* Cards */
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 50px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: var(--primary);
+}
+
+.card-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.card-content .price {
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 8px;
+}
+
+/* Seção destaque */
+.highlight {
+  background-color: var(--primary);
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 1.5rem;
+  margin-bottom: 50px;
+  border-radius: 12px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .top-image { height: 250px; }
+  .highlight { font-size: 1.2rem; }
+  header { padding: 15px 20px; }
+}
+
+@media (max-width: 480px) {
+  .top-image { height: 200px; }
+  .highlight { font-size: 1rem; }
+  header { flex-direction: column; gap: 10px; }
+}

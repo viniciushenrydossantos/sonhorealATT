@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Criação de Anúncio de Imóvel</title>
+  <link rel="stylesheet" href="../css/vendas.css">
+</head>
+<body>
+  <header>
+    <h1>🏠 Painel do Administrador</h1>
+  </header>
+
+  <main class="container">
+    <div class="anuncio-card">
+
+      <div class="imagem-placeholder" onclick="document.getElementById('fileInput').click()">
+        <img id="preview" src="" alt="Clique para adicionar imagem" style="display: none;">
+        <span id="placeholderText">Clique para adicionar imagem do imóvel</span>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      </div>
+
+      <div id="thumbnails" class="thumbnails-container"></div>
+
+      <div class="como-titulo">
+        <input type="titulo" id="titulo_anuncio" placeholder="Título do anúncio">
+
+      <div class="endereco">
+        <input type="text" id="rua" placeholder="Rua">
+        <input type="text" id="bairro" placeholder="Bairro">
+        <input type="text" id="numero" placeholder="Número">
+        <input type="text" id="cidade" placeholder="Cidade">
+        <input type="text" id="estado" placeholder="Estado">
+        <input type="text" id="descricao" placeholder="Descrição do imóvel">
+      </div>
+
+      <div class="filter-section">
+        <label for="tipo_moradia">Tipo de Moradia</label>
+        <select id="tipo_moradia" name="tipo_moradia">
+          <option value="">Selecione</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Kitnet">Kitnet</option>
+          <option value="Sobrado">Sobrado</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Cobertura">Cobertura</option>
+          <option value="Chácara">Chácara</option>
+        </select>
+      </div>
+
+      <div class="filter-section">
+        <label for="finalidade">Finalidade</label>
+        <select id="finalidade" name="finalidade">
+          <option value="">Selecione</option>
+          <option value="Venda">Venda</option>
+          <option value="Aluguel">Aluguel</option>
+        </select>
+      </div>
+
+      <div class="info-geral">
+        <input type="number" id="area" placeholder="Área útil (m²)">
+        <input type="number" id="quartos" placeholder="Quartos">
+        <input type="number" id="banheiros" placeholder="Banheiros">
+        <input type="number" id="vagas" placeholder="Vagas de garagem">
+      </div>
+
+      <div class="filter-section">
+        <label for="preco">Preço (R$)</label>
+        <input type="number" id="preco" placeholder="0,00" min="0" step="0.01">
+      </div>
+
+      <div class="filtros-adicionais">
+
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Área de Lazer</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Brinquedoteca</button>
+            <button type="button" onclick="toggleAtivo(this)">Churrasqueira</button>
+            <button type="button" onclick="toggleAtivo(this)">Espaço gourmet</button>
+            <button type="button" onclick="toggleAtivo(this)">Piscina</button>
+            <button type="button" onclick="toggleAtivo(this)">Playground</button>
+            <button type="button" onclick="toggleAtivo(this)">Salão de festas</button>
+            <button type="button" onclick="toggleAtivo(this)">Salão de jogos</button>
+          </div>
+        </div>
+
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Conveniências</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Ar-condicionado</button>
+            <button type="button" onclick="toggleAtivo(this)">Armários Planejados</button>
+            <button type="button" onclick="toggleAtivo(this)">Elevador</button>
+            <button type="button" onclick="toggleAtivo(this)">Jardim</button>
+            <button type="button" onclick="toggleAtivo(this)">Mobilidade</button>
+            <button type="button" onclick="toggleAtivo(this)">Quintal</button>
+            <button type="button" onclick="toggleAtivo(this)">Varanda</button>
+          </div>
+        </div>
+
+        <div class="filter-section expandable">
+          <div class="section-header" onclick="toggleSection(this)">
+            <label>Funcional</label>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="tags">
+            <button type="button" onclick="toggleAtivo(this)">Área de serviço</button>
+            <button type="button" onclick="toggleAtivo(this)">Ático</button>
+            <button type="button" onclick="toggleAtivo(this)">Closet</button>
+            <button type="button" onclick="toggleAtivo(this)">Dependência de Empregada</button>
+            <button type="button" onclick="toggleAtivo(this)">Edícula</button>
+            <button type="button" onclick="toggleAtivo(this)">Escritório</button>
+            <button type="button" onclick="toggleAtivo(this)">Lavabo</button>
+            <button type="button" onclick="toggleAtivo(this)">Lavanderia</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-publicar" onclick="publicar()">Publicar Anúncio</button>
+    </div>
+  </main>
+
+  <section id="todos-imoveis">
+    <h2>Imóveis Cadastrados</h2>
+    <div id="cardContainer" class="card-container"></div>
+  </section>
+
+  <dialog id="modalEditar" class="modal-editar">
+    <form id="formEditar" method="dialog">
+      <h2>Editar Imóvel</h2>
+      <div class="grid-editar">
+        <label>Nome da Casa</label>
+        <input name="nome_casa" placeholder="Nome da casa" required>
+
+        <label>Tipo de Moradia</label>
+        <select id="tipo_moradia_editar" name="tipo_moradia">
+          <option value="">Selecione</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Kitnet">Kitnet</option>
+          <option value="Sobrado">Sobrado</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Cobertura">Cobertura</option>
+          <option value="Chácara">Chácara</option>
+        </select>
+
+        <label>Finalidade</label>
+        <select id="finalidade_editar" name="finalidade">
+          <option value="">Selecione</option>
+          <option value="Venda">Venda</option>
+          <option value="Aluguel">Aluguel</option>
+        </select>
+
+        <label>Preço</label>
+        <input name="preco" type="number" placeholder="Preço" required>
+
+        <label>Rua</label>
+        <input name="rua" placeholder="Rua">
+
+        <label>Bairro</label>
+        <input name="bairro" placeholder="Bairro">
+
+        <label>Número</label>
+        <input name="numero" placeholder="Número">
+
+        <label>Cidade</label>
+        <input name="cidade" placeholder="Cidade">
+
+        <label>Estado</label>
+        <input name="estado" placeholder="Estado">
+
+        <label>Área Total (m²)</label>
+        <input name="area_total" type="number" placeholder="Área total">
+
+        <label>Quartos</label>
+        <input name="quartos" type="number" placeholder="Quartos">
+
+        <label>Banheiros</label>
+        <input name="banheiros" type="number" placeholder="Banheiros">
+
+        <label>Vagas de Garagem</label>
+        <input name="vagas_garagem" type="number" placeholder="Vagas de garagem">
+
+        <label>Disponibilidade</label>
+        <select name="disponibilidade">
+          <option>Disponível</option>
+          <option>Indisponível</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-salvar">Salvar</button>
+        <button type="button" class="btn-cancelar" formmethod="dialog">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="../js/vendas.js"></script>
+</body>
+</html>

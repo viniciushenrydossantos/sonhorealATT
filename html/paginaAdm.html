@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel Administrativo — Cadastrar Imóvel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <h1>🏠 Painel do Administrador</h1>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Imóveis</a>
+      <a href="#">Usuários</a>
+      <a href="#">Sair</a>
+    </nav>
+  </header>
+
+  <main class="admin-container">
+    <section class="form-card">
+      <h2>📋 Criar Anúncio</h2>
+      <div class="upload-box" id="imagePreview">
+        <span>Clique para adicionar imagem do imóvel</span>
+        <input type="file" id="fileInput" accept="image/*">
+      </div>
+
+      <form id="formImovel">
+        <label for="titulo">Título do Anúncio</label>
+        <input type="text" id="titulo" placeholder="Ex: Apartamento à venda">
+
+        <div class="form-grid">
+          <input type="text" placeholder="Rua">
+          <input type="text" placeholder="Bairro">
+          <input type="text" placeholder="Número">
+          <input type="text" placeholder="Cidade">
+          <input type="text" placeholder="Estado">
+        </div>
+
+        <textarea placeholder="Descrição do imóvel"></textarea>
+
+        <div class="form-grid">
+          <select>
+            <option disabled selected>Tipo de Moradia</option>
+            <option>Casa</option>
+            <option>Apartamento</option>
+            <option>Kitnet</option>
+          </select>
+          <select>
+            <option disabled selected>Finalidade</option>
+            <option>Venda</option>
+            <option>Aluguel</option>
+          </select>
+        </div>
+
+        <div class="form-grid">
+          <input type="number" placeholder="Área útil (m²)">
+          <input type="number" placeholder="Quartos">
+          <input type="number" placeholder="Banheiros">
+          <input type="number" placeholder="Vagas de garagem">
+        </div>
+
+        <input type="number" placeholder="Preço (R$)" class="full-width">
+
+        <select class="full-width">
+          <option disabled selected>Área de Lazer</option>
+          <option>Sim</option>
+          <option>Não</option>
+        </select>
+
+        <select class="full-width">
+          <option disabled selected>Conveniências</option>
+          <option>Sim</option>
+          <option>Não</option>
+        </select>
+
+        <select class="full-width">
+          <option disabled selected>Funcional</option>
+          <option>Sim</option>
+          <option>Não</option>
+        </select>
+
+        <button type="submit" class="btn-publicar">📤 Publicar Anúncio</button>
+        <button type="button" class="btn-atualizar">✏️ Atualizar Imóvel</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

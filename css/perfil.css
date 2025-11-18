@@ -1,0 +1,276 @@
+/* ---------------------------------------------
+   ESTILO GERAL
+----------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #f7f9fc);
+  color: #333;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Container principal */
+.perfil-container {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* ---------------------------------------------
+   CARD DO PERFIL
+----------------------------------------------*/
+.perfil-card {
+  display: flex;
+  gap: 30px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.perfil-card::before {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #0099ff22;
+  border-radius: 50%;
+  top: -60px;
+  right: -60px;
+  filter: blur(50px);
+  z-index: 1;
+}
+
+.perfil-card * {
+  z-index: 2;
+}
+
+/* Foto */
+.foto-perfil img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #e3e9f0;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.foto-perfil img:hover {
+  transform: scale(1.05);
+}
+
+/* Informações */
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Texto clicável */
+.clicavel {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  position: relative;
+  padding-right: 10px;
+}
+
+.clicavel:hover {
+  color: #0099ff;
+}
+
+.edit-icon {
+  opacity: 0.4;
+  font-size: 17px;
+  transition: 0.3s;
+}
+
+.clicavel:hover .edit-icon {
+  opacity: 1;
+}
+
+/* Inputs escondidos */
+.hidden {
+  display: none;
+}
+
+/* Inputs */
+#nomeInput,
+#bioInput {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #cfd6e0;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.2s;
+  resize: none;
+}
+
+#nomeInput:focus,
+#bioInput:focus {
+  border-color: #0099ff;
+  background: #f0f8ff;
+}
+
+/* Botão salvar */
+#btnSalvar {
+  width: fit-content;
+  padding: 12px 22px;
+  background: linear-gradient(135deg, #0099ff, #0072c6);
+  border: none;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 153, 255, 0.4);
+}
+
+#btnSalvar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 153, 255, 0.55);
+}
+
+/* ---------------------------------------------
+   FAVORITOS
+----------------------------------------------*/
+.favoritos {
+  margin-top: 10px;
+}
+
+.favoritos h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lista-favoritos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+/* Card dos imóveis favoritos */
+.lista-favoritos div {
+  background: #fff;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: 0.25s ease-in-out;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.lista-favoritos div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+}
+
+/* Imagem do card */
+.lista-favoritos img {
+  width: 100%;
+  border-radius: 12px;
+  height: 170px;
+  object-fit: cover;
+  transition: 0.3s;
+}
+
+.lista-favoritos div:hover img {
+  transform: scale(1.05);
+}
+
+/* Título e preço */
+.lista-favoritos h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.lista-favoritos p {
+  font-weight: 500;
+  color: #0099ff;
+}
+
+/* Ícone de remover favorito */
+.remover-fav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 22px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.remover-fav:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ---------------------------------------------
+   RESPONSIVIDADE
+----------------------------------------------*/
+@media (max-width: 830px) {
+  .perfil-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .foto-perfil img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .info {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 20px 10px;
+  }
+
+  .perfil-card {
+    padding: 25px;
+  }
+
+  #btnSalvar {
+    width: 100%;
+  }
+}
+
+/* ---------------------------------------------
+   ANIMAÇÕES
+----------------------------------------------*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

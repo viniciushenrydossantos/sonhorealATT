@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Busca de Imóveis</title>
+  <link rel="stylesheet" href="../css/anuncio.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+</head>
+<body>
+<header class="site-header">
+  <div class="header-content">
+
+    <!-- HAMBÚRGUER -->
+    <div class="hamburger-wrapper">
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <aside class="menu-mobile">
+        <nav>
+          <a href="../html/anuncio.html">Comprar</a>
+          <a href="../html/vendas.html">Anuncie aqui</a>
+          <a href="../html/favoritos.html">Favoritos</a>
+          <a href="../html/perfil.html">Perfil</a>
+          <a href="../html/sobre.html">Sobre</a>
+
+          <button id="btn-signup" class="btn btn-primary">Login</button>
+        </nav>
+      </aside>
+    </div>
+
+    <!-- LOGO / TÍTULO -->
+    <div class="logo">
+      <img src="../img/logo.png" alt="Logo">
+    </div>
+
+    <!-- Espaço vazio -->
+    <div style="width:30px"></div>
+
+  </div>
+</header>
+
+  <div class="container">
+    <aside class="filters">
+      <h2>Filtros</h2>
+
+      <!-- Estado -->
+      <div class="filter-section">
+        <label for="estado">Estado (UF)</label>
+        <select id="estado" name="estado">
+          <option value="">Selecione um estado</option>
+          <option value="AC">Acre (AC)</option>
+          <option value="AL">Alagoas (AL)</option>
+          <option value="AP">Amapá (AP)</option>
+          <option value="AM">Amazonas (AM)</option>
+          <option value="BA">Bahia (BA)</option>
+          <option value="CE">Ceará (CE)</option>
+          <option value="DF">Distrito Federal (DF)</option>
+          <option value="ES">Espírito Santo (ES)</option>
+          <option value="GO">Goiás (GO)</option>
+          <option value="MA">Maranhão (MA)</option>
+          <option value="MT">Mato Grosso (MT)</option>
+          <option value="MS">Mato Grosso do Sul (MS)</option>
+          <option value="MG">Minas Gerais (MG)</option>
+          <option value="PA">Pará (PA)</option>
+          <option value="PB">Paraíba (PB)</option>
+          <option value="PR">Paraná (PR)</option>
+          <option value="PE">Pernambuco (PE)</option>
+          <option value="PI">Piauí (PI)</option>
+          <option value="RJ">Rio de Janeiro (RJ)</option>
+          <option value="RN">Rio Grande do Norte (RN)</option>
+          <option value="RS">Rio Grande do Sul (RS)</option>
+          <option value="RO">Rondônia (RO)</option>
+          <option value="RR">Roraima (RR)</option>
+          <option value="SC">Santa Catarina (SC)</option>
+          <option value="SP">São Paulo (SP)</option>
+          <option value="SE">Sergipe (SE)</option>
+          <option value="TO">Tocantins (TO)</option>
+        </select>
+      </div>
+
+      <!-- Cidade -->
+      <div class="filter-section">
+        <label for="cidade">Cidade</label>
+        <select id="cidade" disabled>
+          <option value="">Selecione um estado primeiro</option>
+        </select>
+      </div>
+
+      <!-- Localização -->
+      <div class="filter-section">
+        <label>Localização</label>
+        <input type="text" placeholder="Digite bairro, rua ou cidade" />
+      </div>
+
+      <!-- Tipo de Imóvel -->
+      <div class="filter-section">
+        <label>Tipo de imóvel</label>
+        <div class="types">
+          <button>Apartamento</button>
+          <button>Casa</button>
+          <button>Kitnet</button>
+          <div class="more-types-toggle">
+            <span class="plus">+</span><a onclick="abrirModalTipo()">Mais tipos</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL LATERAL DE TIPOS -->
+      <div id="modalTipo" class="modal-tipo hidden">
+        <div class="modal-header">
+          <h3>Mais tipos de imóvel</h3>
+          <span class="close" onclick="fecharModalTipo()">✕</span>
+        </div>
+        <div class="modal-body">
+          <h4>Residencial</h4>
+          <div class="tipo-grid">
+            <div class="tipo-card">Sobrado</div>
+            <div class="tipo-card">Cobertura</div>
+            <div class="tipo-card">Terreno</div>
+            <div class="tipo-card">Flat</div>
+            <div class="tipo-card">Studio</div>
+            <div class="tipo-card">Loft</div>
+          </div>
+
+          <h4>Comercial</h4>
+          <div class="tipo-grid">
+            <div class="tipo-card">Sala Comercial</div>
+            <div class="tipo-card">Loja</div>
+            <div class="tipo-card">Galpão</div>
+            <div class="tipo-card">Prédio</div>
+            <div class="tipo-card">Coworking</div>
+            <div class="tipo-card">Depósito</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preço -->
+      <div class="filter-section">
+        <label>Preço (R$)</label>
+        <div class="price-inputs">
+          <input type="number" placeholder="Mínimo" />
+          <input type="number" placeholder="Máximo" />
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <label>Quartos</label>
+        <div class="quantity-btns">
+          <button>+1</button>
+          <button>+2</button>
+          <button>+3</button>
+          <button>+4</button>
+        </div>
+      </div>
+     
+      <div class="filter-section">
+        <label>banheiros</label>
+        <div class="quantity-btns"> 
+          <button>+1</button>
+          <button>+2</button>
+          <button>+3</button>
+          <button>+4</button>
+        </div>
+      </div>
+
+      
+      <div class="filter-section">
+        <label>vagas</label>
+        <div class="quantity-btns">
+          <button>+1</button>
+          <button>+2</button>
+          <button>+3</button>
+          <button>+4</button>
+        </div>
+      </div>
+
+      <!-- Área útil -->
+      <div class="filter-section">
+        <label>Área útil (m²)</label>
+        <div class="area-inputs">
+          <input type="number" placeholder="De" />
+          <input type="number" placeholder="Até" />
+        </div>
+      </div>
+
+      <!-- Área de Lazer -->
+      <div class="filter-section expandable">
+        <div class="section-header" onclick="toggleSection(this)">
+          <label>Área de Lazer</label>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="tags">
+          <button>Brinquedoteca</button>
+          <button>Churrasqueira</button>
+          <button>Espaço gourmet</button>
+          <button>Piscina</button>
+          <button>Playground</button>
+          <button>Salão de festas</button>
+          <button>Salão de jogos</button>
+        </div>
+      </div>
+
+      <!-- Conveniências -->
+      <div class="filter-section expandable">
+        <div class="section-header" onclick="toggleSection(this)">
+          <label>Conveniências</label>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="tags">
+          <button>Ar-condicionado</button>
+          <button>Armários Planejados</button>
+          <button>Elevador</button>
+          <button>Hidromassagem</button>
+          <button>Jardim</button>
+          <button>Lareira</button>
+          <button>Mobilidade</button>
+          <button>Quintal</button>
+          <button>Sauna</button>
+          <button>Varanda</button>
+        </div>
+      </div>
+
+      <!-- Funcional -->
+      <div class="filter-section expandable">
+        <div class="section-header" onclick="toggleSection(this)">
+          <label>Funcional</label>
+          <span class="toggle">▼</span>
+        </div>
+        <div class="tags">
+          <button>Área de serviço</button>
+          <button>Ático</button>
+          <button>Closet</button>
+          <button>Dependência de Empregada</button>
+          <button>Edícula</button>
+          <button>Escritório</button>
+          <button>Lavabo</button>
+          <button>Lavanderia</button>
+        </div>
+      </div>
+
+      <!-- Botão Filtrar -->
+      <div class="filter-section">
+<button id="btn-filtrar" class="btn-filtrar">Filtrar</button>
+      </div>
+
+    </aside>
+
+    <!-- Resultados -->
+    <main class="results">
+      <div class="result-count"></div>
+
+      <div class="card">
+        <img src="https://via.placeholder.com/300x200" alt="Imagem do imóvel" />
+        <div class="info">
+          <h3>Rua General Caiado de Castro, Fortaleza/CE</h3>
+          <p>Casa Moderna</p>
+          <p>60m² · 3 quartos · 2 vagas</p>
+          <strong>R$ 541.000</strong>
+          <button>ver mais</button>
+
+      </div>
+
+      <div class="card">
+        <img src="https://via.placeholder.com/300x200" alt="Imagem do imóvel" />
+        <div class="info">
+          <h3>Rua Capitão Leonidas Marques, Curitiba/PR</h3>
+          <p>47m² · Sala Comercial</p>
+          <strong>R$ 4.470</strong>
+          <button>ver mais</button>
+        </div>
+      </div>
+    </main>
+  </div>
+<!-- ==============================
+🏠 MODAL DE DETALHES DO IMÓVEL
+============================== -->
+<!-- ... resto da página ... -->
+
+<!-- MODAL DE DETALHES -->
+<div id="modalDetalhes" class="modal hidden">
+  <div class="modal-content">
+    <button class="modal-close" onclick="fecharModalDetalhes()">×</button>
+
+    <div class="modal-topo">
+      <div class="modal-img-wrapper">
+        <img id="modalImagem" src="https://via.placeholder.com/600x400" alt="Imagem do imóvel">
+      </div>
+<div class="modal-gallery" id="modalGaleria"></div>
+
+      <div class="modal-info">
+        <h2 id="modalTitulo">Título do Anúncio</h2>
+        <p id="modalDescricao" class="descricao">Sem descrição disponível.</p>
+
+        <div class="modal-detalhes-grid">
+          <p><strong>Área:</strong> <span id="modalArea">—</span></p>
+          <p><strong>Quartos:</strong> <span id="modalQuartos">—</span></p>
+          <p><strong>Banheiros:</strong> <span id="modalBanheiros">—</span></p>
+          <p><strong>Vagas:</strong> <span id="modalVagas">—</span></p>
+          <p><strong>Finalidade:</strong> <span id="modalFinalidade">—</span></p>
+          <p><strong>Preço:</strong> <span id="modalPreco">—</span></p>
+          <p><strong>Disponível:</strong> <span id="modalDisponibilidade">—</span></p>
+        </div>
+
+       <div class="modal-botoes">
+  <button class="btn-solicitar" onclick="abrirCalendario()">📅 Solicitar Visita</button>
+  <button class="btn-mensagem" onclick="abrirContato()">💬 Número / WhatsApp</button>
+<button class="btn-fav" onclick="toggleFavorito(this)">❤</button>
+
+</div>
+
+<!-- CALENDÁRIO (inicialmente escondido) -->
+<div id="calendario-visita" class="calendario hidden">
+  <h3>Escolha uma data para visita</h3>
+  <input type="date" id="data-visita" />
+  <button class="btn-confirmar" onclick="confirmarVisita()">Confirmar</button>
+  <button class="btn-fechar" onclick="fecharCalendario()">Cancelar</button>
+</div>
+
+
+<!-- Coloque o script SEMPRE depois -->
+<script src="anuncio.js"></script>
+</body>
+</html>
+
+  <script src="../js/anuncio.js"></script>
+</body>
+</html>

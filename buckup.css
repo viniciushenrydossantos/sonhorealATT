@@ -1,0 +1,597 @@
+/* =====================
+RESET E BASE
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f5f3ee;
+  color: #333;
+  padding-top: 70px; /* evita que o conteúdo fique atrás do header fixo */
+}
+
+/* =====================
+CONTAINER GERAL
+===================== */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 40px auto;
+  gap: 24px;
+  padding: 0 20px;
+}
+
+/* =====================
+FILTROS
+===================== */
+.filters {
+  flex: 1 1 280px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filters h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.filter-section {
+  margin-bottom: 24px;
+}
+
+.filter-section label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+}
+
+.filters select,
+.filter-section input[type="text"],
+.filter-section input[type="number"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #dcdfe3;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fafafa;
+  transition: border 0.3s;
+}
+
+.filter-section input:focus,
+.filters select:focus {
+  border-color: #007aff;
+  outline: none;
+}
+
+.filters select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+/* =====================
+ÁREA DE INPUTS
+===================== */
+.area-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.area-inputs input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* =====================
+BOTÕES / TAGS
+===================== */
+.types button,
+.quantity-btns button,
+.filter-section .tags button {
+  margin: 5px 5px 0 0;
+  padding: 8px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.types button:hover,
+.quantity-btns button:hover,
+.filter-section .tags button:hover {
+  background-color: #007aff;
+  color: #fff;
+  border-color: #7a8c99;
+}
+
+/* =====================
+TAGS EXPANSÍVEIS
+===================== */
+.filter-section.expandable .tags {
+  margin-top: 8px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-section.expandable.expanded .tags {
+  display: flex;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.section-header .toggle {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* =====================
+RESULTADOS
+===================== */
+.results {
+  flex: 3 1 700px;
+}
+
+.result-count {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #444;
+}
+
+.card {
+  display: flex;
+  background: #fff;
+  border: 1px solid #b0b0b0;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  margin-bottom: 24px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card img {
+  width: 300px;
+  object-fit: cover;
+}
+
+.card .info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.card p {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 12px;
+}
+
+.card strong {
+  font-size: 18px;
+  color: #007aff;
+  margin-bottom: 14px;
+}
+
+.card button {
+  align-self: flex-start;
+  padding: 10px 16px;
+  background: #007aff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card button:hover {
+  background: #005fc4;
+}
+
+/* =====================
+MODAL TIPO DE IMÓVEL
+===================== */
+.more-types-toggle {
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.more-types-toggle a {
+  text-decoration: underline;
+  color: #333;
+  cursor: pointer;
+}
+
+.more-types-toggle .plus {
+  color: #e60023;
+  margin-right: 6px;
+}
+
+.modal-tipo {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.modal-tipo.hidden {
+  transform: translateX(100%);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.modal-header h3 {
+  font-size: 18px;
+}
+
+.modal-header .close {
+  font-size: 20px;
+  color: #e60023;
+  cursor: pointer;
+}
+
+.modal-body h4 {
+  margin: 18px 0 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.tipo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tipo-card {
+  background-color: #f6f6f6;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.tipo-card:hover {
+  border-color: #007aff;
+  background-color: #eaf3ff;
+}
+
+/* =====================
+HEADER
+===================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: transparent;
+  box-shadow: none;
+  z-index: 999;
+  padding: 10px 20px;
+  backdrop-filter: blur(6px);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #2e2e2e;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #0077cc;
+}
+
+/* =====================
+BOTÃO FILTRAR
+===================== */
+.btn-filtrar {
+  width: 100%;
+  padding: 12px;
+  background-color: #d92323;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-filtrar:hover {
+  background-color: #b81d1d;
+}
+
+/* =====================
+ESTADO ATIVO
+===================== */
+button.active,
+.tipo-card.active {
+  background-color: #0066ff;
+  color: #fff;
+  border: 1px solid #004ecc;
+}
+
+/* =====================
+RESPONSIVO
+===================== */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .card {
+    flex-direction: column;
+  }
+
+  .card img {
+    width: 100%;
+  }
+
+  .modal-tipo {
+    width: 100%;
+  }
+}
+/* ===== BASE DO MODAL ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 95%;
+  max-width: 1220px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ===== BOTÃO FECHAR ===== */
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: 0.3s ease;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  color: #e63946;
+}
+
+/* ===== TOPO: GALERIA + INFO ===== */
+.modal-topo {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+}
+
+/* ===== GALERIA ===== */
+.modal-galeria {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  border-right: 1px solid #ddd;
+}
+
+.modal-imagem-principal {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-height: 520px;
+}
+
+.modal-imagem-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.modal-imagem-principal img:hover {
+  transform: scale(1.05);
+}
+
+.modal-miniaturas {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  justify-content: center;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+.modal-miniaturas img {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.modal-miniaturas img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.modal-miniaturas img.active {
+  opacity: 1;
+  border: 2px solid #007bff;
+}
+
+/* ===== INFO ===== */
+.modal-info {
+  flex: 1 1 45%;
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-info h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.modal-info .descricao {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.modal-detalhes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+  gap: 12px 24px;
+  font-size: 1.05rem;
+}
+
+.modal-detalhes-grid strong {
+  color: #000;
+}
+
+.modal-botoes {
+  margin-top: 32px;
+  display: flex;
+  gap: 12px;
+}
+
+.modal-botoes button {
+  flex: 1;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-solicitar {
+  background: #007bff;
+  color: #fff;
+}
+
+.btn-solicitar:hover {
+  background: #0056d2;
+}
+
+.btn-mensagem {
+  background: #f1f1f1;
+  color: #333;
+}
+
+.btn-mensagem:hover {
+  background: #e4e4e4;
+}
+
+/* ===== ANIMAÇÃO ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 900px) {
+  .modal-topo {
+    flex-direction: column;
+  }
+
+  .modal-imagem-principal {
+    max-height: 300px;
+  }
+
+  .modal-miniaturas {
+    flex-wrap: wrap;
+  }
+
+  .modal-info {
+    padding: 28px 32px;
+  }
+}
