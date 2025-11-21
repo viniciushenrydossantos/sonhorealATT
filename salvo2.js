@@ -331,31 +331,10 @@ function abrirContato() {
   window.open(linkWhatsApp, "_blank");
 }
 // ========== FUNÇÕES DO CALENDÁRIO ==========
-// ========== FUNÇÕES DO CALENDÁRIO ==========
 
-/// Data de postagem do imóvel
-const dataPostagem = "2025-11-21";
-
+// Abre o calendário
 function abrirCalendario() {
-  const calendario = document.getElementById("calendario-visita");
-  const inputData = document.getElementById("data-visita");
-
-  calendario.classList.remove("hidden");
-
-  // trava para não escolher antes da postagem
-  inputData.min = dataPostagem;
-
-  // abre já posicionado no mês/ano correto
-  inputData.value = dataPostagem;
-
-  // ====== FORÇA ABRIR O CALENDÁRIO ======
-  setTimeout(() => {
-    if (inputData.showPicker) {
-      inputData.showPicker();   // 🔥 abre o calendário automaticamente!
-    } else {
-      inputData.focus();        // fallback para navegadores antigos
-    }
-  }, 150);
+  document.getElementById("calendario-visita").classList.remove("hidden");
 }
 
 // Fecha o calendário
@@ -363,7 +342,7 @@ function fecharCalendario() {
   document.getElementById("calendario-visita").classList.add("hidden");
 }
 
-// Envia mensagem pro WhatsApp com nome_casa
+// Envia mensagem pro WhatsApp do dono
 function confirmarVisita() {
   const data = document.getElementById("data-visita").value;
   const hora = document.getElementById("hora-visita").value;
@@ -378,21 +357,27 @@ function confirmarVisita() {
     return;
   }
 
-  const nome_casa = document.getElementById("modalTitulo").textContent.trim();
+  // Agora pegando exatamente o nome_casa do modal
+  const nome_casa = document.getElementById("modalTitulo").textContent.trim() || "Imóvel";
 
+  // Formata data
   const dataFormatada = new Date(data).toLocaleDateString("pt-BR");
 
+  // WhatsApp do dono
   const telefoneDono = "5517992731437";
 
+  // Mensagem com nome_casa
   const mensagem = encodeURIComponent(
     `Olá! Gostaria de agendar uma visita para *${nome_casa}*.\n\n📅 *Data:* ${dataFormatada}\n⏰ *Hora:* ${hora}\n\nAguardo confirmação!`
   );
 
-  window.open(`https://wa.me/${telefoneDono}?text=${mensagem}`, "_blank");
+  const url = `https://wa.me/${telefoneDono}?text=${mensagem}`;
+
+  // Abre conversa com o dono
+  window.open(url, "_blank");
 
   fecharCalendario();
 }
-
 // ================================
 // 🩷 BOTÃO DE FAVORITAR (CARDS E MODAL)
 // ================================

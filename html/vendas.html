@@ -7,8 +7,46 @@
 </head>
 <body>
   <header>
-    <h1>🏠 Painel do Administrador</h1>
-  </header>
+<header>
+  <div class="container header-inner">
+
+    <!-- HAMBÚRGUER À ESQUERDA -->
+    <div class="hamburger-wrapper">
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <!-- MENU LATERAL QUE SUBSTITUI O MENU DA DIREITA -->
+      <aside class="menu-mobile">
+        <nav aria-label="Menu mobile">
+          <a href="../html/anuncio.html">Comprar</a>
+          <a href="../html/vendas.html">Anuncie aqui</a>
+          <a href="../html/favoritos.html">Favoritos</a>
+          <a href="../html/perfil.html">perfil</a>
+          <a href="../html/sobre.html">sobre</a>
+         
+         
+         
+          <button id="btn-signup" class="btn btn-primary">Login</button>
+       
+       
+        </nav>
+      </aside>
+    </div>
+
+    <!-- LOGO NO CENTRO -->
+    <div class="brand">
+      <h1>ISA</h1>
+      <span>Encontre seu próximo lar</span>
+    </div>
+
+    <!-- REMOVE ***TOTALMENTE*** O MENU DA DIREITA -->
+    <div class="menu-right-placeholder"></div>
+
+  </div>
 
   <main class="container">
     <div class="anuncio-card">

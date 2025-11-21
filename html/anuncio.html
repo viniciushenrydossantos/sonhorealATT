@@ -34,12 +34,10 @@
       </aside>
     </div>
 
-    <!-- LOGO / TÍTULO -->
     <div class="logo">
       <img src="../img/logo.png" alt="Logo">
     </div>
 
-    <!-- Espaço vazio -->
     <div style="width:30px"></div>
 
   </div>
@@ -49,7 +47,6 @@
     <aside class="filters">
       <h2>Filtros</h2>
 
-      <!-- Estado -->
       <div class="filter-section">
         <label for="estado">Estado (UF)</label>
         <select id="estado" name="estado">
@@ -314,20 +311,23 @@
 
 </div>
 
-<!-- CALENDÁRIO (inicialmente escondido) -->
 <div id="calendario-visita" class="calendario hidden">
   <h3>Escolha uma data para visita</h3>
-  <input type="date" id="data-visita" />
+
+  <div class="input-wrapper">
+    <input type="date" id="data-visita" />
+  </div>
+
+  <div class="input-wrapper">
+    <input type="time" id="hora-visita" />
+  </div>
+
   <button class="btn-confirmar" onclick="confirmarVisita()">Confirmar</button>
   <button class="btn-fechar" onclick="fecharCalendario()">Cancelar</button>
 </div>
 
-
-<!-- Coloque o script SEMPRE depois -->
-<script src="anuncio.js"></script>
-</body>
-</html>
-
-  <script src="../js/anuncio.js"></script>
+</div> <!-- FECHA .modal-content -->
+</div> <!-- FECHA .modal -->
+<script src="../js/anuncio.js"></script>
 </body>
 </html>

@@ -431,64 +431,47 @@ function abrirContato() {
  
   window.open(linkWhatsApp, "_blank");
 }
-// ============================================
-// ⭐ FAVORITAR IMÓVEIS
-// ============================================
+/* =====================================================
+   FAVORITOS NA HOME
+   ===================================================== */
 
-// Função para obter os favoritos do usuário logado
-function getFavoritos() {
+function toggleFavorito(idImovel, botao) {
   const user = localStorage.getItem("user");
-  if (!user) return [];
-  return JSON.parse(localStorage.getItem(`favoritos_${user}`) || "[]");
+  if (!user) return alert("Você precisa estar logado!");
+
+  const key = `favoritos_${user}`;
+  let favoritos = JSON.parse(localStorage.getItem(key)) || [];
+
+  // adicionar ou remover
+  if (favoritos.includes(idImovel)) {
+    favoritos = favoritos.filter(id => id !== idImovel);
+    botao.classList.remove("favorited");
+  } else {
+    favoritos.push(idImovel);
+    botao.classList.add("favorited");
+  }
+
+  localStorage.setItem(key, JSON.stringify(favoritos));
 }
 
-// Função para salvar os favoritos
-function saveFavoritos(favoritos) {
+function atualizarFavoritosUI() {
   const user = localStorage.getItem("user");
   if (!user) return;
-  localStorage.setItem(`favoritos_${user}`, JSON.stringify(favoritos));
-}
 
-// Alternar favorito (adicionar/remover)
-function toggleFavorito(id_imovel, btn) {
-  exigirLogin(() => {
-    let favoritos = getFavoritos();
-    const index = favoritos.indexOf(id_imovel);
+  const key = `favoritos_${user}`;
+  const favoritos = JSON.parse(localStorage.getItem(key)) || [];
 
-    if (index >= 0) {
-      favoritos.splice(index, 1); // remove
-      btn.classList.remove("favorited");
-    } else {
-      favoritos.push(id_imovel); // adiciona
-      btn.classList.add("favorited");
-    }
-    saveFavoritos(favoritos);
-  });
-}
-
-// Atualiza visualmente os favoritos já salvos
-function atualizarFavoritosUI() {
-  const favoritos = getFavoritos();
   document.querySelectorAll(".btn-fav").forEach(btn => {
-    const id = parseInt(btn.dataset.id);
+    const id = Number(btn.dataset.id);
     if (favoritos.includes(id)) {
       btn.classList.add("favorited");
-    } else {
-      btn.classList.remove("favorited");
     }
   });
 }
 
-  fetchImoveis().then(renderImoveis);
-  setTimeout(() => {
-  document.querySelectorAll(".btn-fav").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = parseInt(btn.dataset.id);
-      toggleFavorito(id, btn);
-    });
-  });
+document.addEventListener("DOMContentLoaded", () => {
   atualizarFavoritosUI();
-}, 100);
+});
 
 // ========== FUNÇÕES DO CALENDÁRIO ==========
 function abrirCalendario() {
