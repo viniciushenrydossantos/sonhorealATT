@@ -169,82 +169,94 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  async function fetchImoveis() {
-    try {
-      const params = new URLSearchParams();
-
-      for (const key in filtros) {
-        if (filtros[key]) params.append(key, filtros[key]);
-      }
-
-      // Busca os imóveis
-const res = await fetch(`https://sonho-real-back.onrender.com/imoveis?${params.toString()}`);
-      if (!res.ok) throw new Error("Falha ao conectar ao servidor");
-
-      const imoveis = await res.json();
-
-      async function processarEmLotes(imoveis, tamanhoDoLote = 5) {
-        const resultado = [];
-        for (let i = 0; i < imoveis.length; i += tamanhoDoLote) {
-          const lote = imoveis.slice(i, i + tamanhoDoLote);
-          const resultadosLote = await Promise.all(lote.map(async (imovel) => {
-            try {
-const resImg = await fetch(`https://sonho-real-back.onrender.com/fotos_casa?id_imovel=${imovel.id_imovel}`);
-              const fotos = resImg.ok ? await resImg.json() : [];
-              const imgUrl = fotos.length > 0 
-                ? `data:${fotos[0].mimetype};base64,${fotos[0].data}` 
-                : 'https://via.placeholder.com/300x200';
-              return { ...imovel, imagem: imgUrl, fotos };
-            } catch {
-              return { ...imovel, imagem: 'https://via.placeholder.com/300x200', fotos: [] };
-            }
-          }));
-          resultado.push(...resultadosLote);
-        }
-        return resultado;
-      }
-
-      const imoveisComFotos = await processarEmLotes(imoveis, 5);
-      renderCards(imoveisComFotos);
-
-    } catch (err) {
-      console.error("Erro ao buscar imóveis:", err);
-      cardsContainer.innerHTML = "<p>Erro ao carregar imóveis</p>";
-      resultCount.textContent = "0 imóveis encontrados";
+async function fetchImoveis() {
+  try {
+    // Criar parâmetros da requisição com base nos filtros
+    const params = new URLSearchParams();
+    for (const key in filtros) {
+      if (filtros[key]) params.append(key, filtros[key]);
     }
+
+    // Buscar imóveis
+    const res = await fetch(`http://192.168.1.44:3000/imoveis?${params.toString()}`);
+    if (!res.ok) throw new Error("Falha ao conectar ao servidor");
+    const imoveis = await res.json();
+
+    // Buscar todas as fotos de uma vez
+    const resFotos = await fetch(`http://192.168.1.44:3000/fotos_casa`);
+    const fotos = resFotos.ok ? await resFotos.json() : [];
+
+    // Associar as fotos aos imóveis
+    const imoveisComFotos = imoveis.map(imovel => {
+      const imgs = fotos.filter(f => f.id_imovel === imovel.id_imovel);
+
+      // Se houver fotos, usa a primeira
+      const primeiraImg = imgs.length > 0
+        ? `data:${imgs[0].mimetype};base64,${arrayBufferToBase64(imgs[0].data.data)}`
+        : 'https://via.placeholder.com/300x200'; // Caso não tenha fotos
+
+      return { ...imovel, imagem: primeiraImg, fotos: imgs };
+    });
+
+    // Renderizar os imóveis com as fotos
+    renderCards(imoveisComFotos);
+  } catch (err) {
+    console.error("Erro ao buscar imóveis:", err);
+    cardsContainer.innerHTML = "<p>Erro ao carregar imóveis</p>";
+    resultCount.textContent = "0 imóveis encontrados";
+  }
+}
+
+// Função de renderização dos imóveis na tela
+function renderCards(imoveis) {
+  if (!imoveis.length) {
+    cardsContainer.innerHTML = "<p>Nenhum imóvel encontrado</p>";
+    resultCount.textContent = "0 imóveis encontrados";
+    return;
   }
 
-  function renderCards(imoveis) {
-    if (!imoveis.length) {
-      cardsContainer.innerHTML = "<p>Nenhum imóvel encontrado</p>";
-      resultCount.textContent = "0 imóveis encontrados";
-      return;
-    }
+  const html = imoveis.map(imovel => {
+    const primeiraImg = imovel.fotos.length > 0
+      ? `data:${imovel.fotos[0].mimetype};base64,${arrayBufferToBase64(imovel.fotos[0].data.data)}`
+      : 'https://via.placeholder.com/300x200';
 
-    const html = imoveis.map(imovel => `
+    return `
       <div class="card">
-        <img src="${imovel.imagem}" alt="Imagem do imóvel" />
+        <img src="${primeiraImg}" alt="Imagem do imóvel" />
         <div class="info">
           <h3>${imovel.nome_casa || "Imóvel"} - ${imovel.rua || ""}, ${imovel.bairro || ""}</h3>
           <p>${imovel.tipo_moradia || ""} · ${imovel.area_total || 0}m² · ${imovel.quartos || 0} quartos · ${imovel.banheiros || 0} banheiros · ${imovel.vagas_garagem || 0} vagas</p>
           <p>Finalidade: ${imovel.finalidade || "Não informado"}</p>
           <strong>R$ ${Number(imovel.preco || 0).toLocaleString('pt-BR')}</strong>
           <p>Disponível: ${imovel.disponibilidade ? 'Sim' : 'Não'}</p>
-          <button class="btn-detalhes" data-imovel='${JSON.stringify(imovel)}'>Ver mais</button>
+          <button class="btn-detalhes" data-id="${imovel.id_imovel}">Ver mais</button>
         </div>
       </div>
-    `).join("");
+    `;
+  }).join("");
 
-    cardsContainer.innerHTML = html;
-    resultCount.textContent = `${imoveis.length} imóveis encontrados`;
+  cardsContainer.innerHTML = html;
+  resultCount.textContent = `${imoveis.length} imóveis encontrados`;
 
-    document.querySelectorAll(".btn-detalhes").forEach(btn => {
-      btn.addEventListener("click", e => {
-        const imovel = JSON.parse(e.target.dataset.imovel);
-        abrirModalDetalhes(imovel);
-      });
+  // Adicionar evento de click para o botão de detalhes
+  document.querySelectorAll(".btn-detalhes").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const idImovel = e.target.dataset.id;
+      const imovel = imoveis.find(i => i.id_imovel == idImovel);
+      if (imovel) abrirModalDetalhes(imovel);
     });
-  }
+  });
+}
+
+// Função para converter arrayBuffer para base64 (igual no segundo código)
+function arrayBufferToBase64(buffer) {
+  const binary = String.fromCharCode(...new Uint8Array(buffer));
+  return window.btoa(binary);
+}
+
+// Chamar ao carregar a página
+fetchImoveis();
+
 
   btnFiltrar.addEventListener("click", fetchImoveis);
 
@@ -330,7 +342,6 @@ function abrirContato() {
  
   window.open(linkWhatsApp, "_blank");
 }
-// ========== FUNÇÕES DO CALENDÁRIO ==========
 // ========== FUNÇÕES DO CALENDÁRIO ==========
 
 /// Data de postagem do imóvel

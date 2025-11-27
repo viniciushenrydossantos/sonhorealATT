@@ -1,259 +1,217 @@
-  document.addEventListener("DOMContentLoaded", () => {
-    const API_URL = "https://sonho-real-back.onrender.com";
-    const uploadInput = document.getElementById("fileInput");
-    const preview = document.getElementById("preview");
-    const placeholderText = document.getElementById("placeholderText");
-    const thumbnails = document.getElementById("thumbnails");
-    const cardContainer = document.getElementById("cardContainer");
-    const modalEditar = document.getElementById("modalEditar");
-    const formEditar = document.getElementById("formEditar");
+// ===== CONFIGURAÇÕES =====
+const API = "http://localhost:3000";
 
-    let base64Imagens = [];
+let imagensSelecionadas = []; 
+let idDoImovelCriado = null;
 
-    const ADMINS = [
-      "IsabelaRF24@gmail.com.br",
-      "ViniciusHenry@gmail.com.br",
-      "KauanHenrique@gmail.com.br",
-      "Marialulu@gmail.com.br",
-      "MariaJuliaDePaula@gmail.com.br",
-      "AnaBeatriz@gmail.com.br"
-    ];
+// =========================================
+// 📌 PREVIEW DAS IMAGENS
+// =========================================
+document.getElementById("fileInput").addEventListener("change", async function (e) {
+    const files = e.target.files;
 
-    // ==============================
-    // 📸 UPLOAD DE IMAGENS
-    // ==============================
-    uploadInput.addEventListener("change", (event) => {
-      const files = Array.from(event.target.files);
-      thumbnails.innerHTML = "";
-      base64Imagens = [];
+    for (const file of files) {
+        const base64 = await toBase64(file);
+        imagensSelecionadas.push({ file, base64 });
+        criarThumbnail(base64);
+    }
 
-      files.forEach((file) => {
+    document.getElementById("placeholderText").style.display = "none";
+});
+
+// Converter arquivo → Base64
+function toBase64(file) {
+    return new Promise((resolve) => {
         const reader = new FileReader();
-        reader.onload = () => {
-          const base64 = reader.result.replace(/^data:.+;base64,/, "");
-          base64Imagens.push({
-            nome: file.name,
-            mimetype: file.type,
-            data: base64,
-          });
-
-          const img = document.createElement("img");
-          img.src = reader.result;
-          img.classList.add("thumb");
-          thumbnails.appendChild(img);
-        };
+        reader.onload = () => resolve(reader.result.split(",")[1]);
         reader.readAsDataURL(file);
-      });
+    });
+}
 
-      if (files.length > 0) {
-        preview.src = URL.createObjectURL(files[0]);
-        preview.style.display = "block";
-        placeholderText.style.display = "none";
-      }
+// Criar miniaturas
+function criarThumbnail(base64) {
+    const cont = document.getElementById("thumbnails");
+
+    const img = document.createElement("img");
+    img.src = "data:image/jpeg;base64," + base64;
+    img.classList.add("thumb");
+
+    cont.appendChild(img);
+}
+
+
+async function publicar() {
+    const titulo = document.getElementById("titulo_anuncio").value;
+    const rua = document.getElementById("rua").value;
+    const bairro = document.getElementById("bairro").value;
+    const numero = document.getElementById("numero").value;
+    const cidade = document.getElementById("cidade").value;
+    const estado = document.getElementById("estado").value;
+    const descricao = document.getElementById("descricao").value;
+
+    const tipo_moradia = document.getElementById("tipo_moradia").value;
+    const finalidade = document.getElementById("finalidade").value;
+
+    const area = document.getElementById("area").value;
+    const quartos = document.getElementById("quartos").value;
+    const banheiros = document.getElementById("banheiros").value;
+    const vagas = document.getElementById("vagas").value;
+
+    const preco = document.getElementById("preco").value;
+
+    if (!titulo || imagensSelecionadas.length === 0) {
+        alert("Preencha o título e selecione imagens.");
+        return;
+    }
+
+    // CADASTRAR O IMÓVEL
+    const body = {
+        nome_casa: titulo,
+        tipo_moradia,
+        finalidade,
+        preco,
+        rua,
+        bairro,
+        numero,
+        cidade,
+        estado,
+        area_total: area,
+        quartos,
+        banheiros,
+        vagas_garagem: vagas,
+        disponibilidade: "Disponível",
+        descricao
+    };
+
+    const req = await fetch(`${API}/imovel/cadastrar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
     });
 
-    // ==============================
-    // 🚀 PUBLICAR IMÓVEL (CORRIGIDO)
-    // ==============================
-    window.publicar = async function publicar() {
-      try {
-        const usuarioLogado = localStorage.getItem("user");
-        if (!usuarioLogado) {
-          alert("Você precisa estar logado para publicar um imóvel!");
-          return;
-        }
+    const resp = await req.json();
 
-        const nome_casa = document.getElementById("titulo_anuncio").value.trim();
-        const tipo_moradia = document.getElementById("tipo_moradia").value;
-        const finalidade = document.getElementById("finalidade").value;
-        const preco = document.getElementById("preco").value;
-        const rua = document.getElementById("rua").value;
-        const bairro = document.getElementById("bairro").value;
-        const numero = document.getElementById("numero").value;
-        const cidade = document.getElementById("cidade").value;
-        const estado = document.getElementById("estado").value;
-        const area_total = document.getElementById("area").value;
-        const quartos = document.getElementById("quartos").value;
-        const banheiros = document.getElementById("banheiros").value;
-        const vagas_garagem = document.getElementById("vagas").value;
-        const disponibilidade = "Disponível";
+    if (!req.ok) return alert("Erro ao cadastrar imóvel!");
 
-        const res = await fetch(`${API_URL}/imovel/cadastrar`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nome_casa,
-            tipo_moradia,
-            finalidade,
-            preco,
-            rua,
-            bairro,
-            numero,
-            cidade,
-            estado,
-            area_total,
-            quartos,
-            banheiros,
-            vagas_garagem,
-            disponibilidade,
-            usuario: usuarioLogado
-          }),
-        });
+    // 🔥 Agora recebemos o ID correto da API!
+    idDoImovelCriado = resp.id_imovel;
 
-        if (!res.ok) throw new Error("Erro ao cadastrar imóvel");
+    alert("Imóvel cadastrado... enviando imagens");
 
-        // 🔥 PEGAR O ID DIRETO DA RESPOSTA DO BACKEND
-        const dadosCriacao = await res.json();
-        const id_imovel = dadosCriacao.id_imovel;
-
-        console.log("ID recebido do backend:", id_imovel);
-
-        // ==============================
-        // 📸 SALVAR FOTOS (AGORA FUNCIONA)
-        // ==============================
-        for (const img of base64Imagens) {
-          await fetch(`${API_URL}/fotos_casa`, {
+    // ENVIAR AS IMAGENS BYTEA
+    for (const img of imagensSelecionadas) {
+        await fetch(`${API}/fotos_casa`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              nome: img.nome,
-              mimetype: img.mimetype,
-              data: img.data,
-              id_imovel,
-            }),
-          });
-        }
+                nome: img.file.name,
+                mimetype: img.file.type,
+                data: img.base64,
+                id_imovel: idDoImovelCriado
+            })
+        });
+    }
 
-        alert("Imóvel cadastrado com sucesso!");
+    alert("Imóvel e imagens cadastrados com sucesso!");
+    carregarImoveis();
+}
 
-        base64Imagens = [];
-        uploadInput.value = "";
-        preview.style.display = "none";
-        thumbnails.innerHTML = "";
 
+
+
+async function carregarImoveis() {
+    const cards = document.getElementById("cardContainer");
+    cards.innerHTML = "";
+
+    const imoveis = await fetch(`${API}/imoveis`).then(r => r.json());
+    const fotos = await fetch(`${API}/fotos_casa`).then(r => r.json());
+
+    imoveis.forEach(imovel => {
+        const imgs = fotos.filter(f => f.id_imovel === imovel.id_imovel);
+
+        const primeiraImg = imgs.length > 0
+            ? `data:${imgs[0].mimetype};base64,${arrayBufferToBase64(imgs[0].data.data)}`
+            : "../img/placeholder.png";
+
+        const card = document.createElement("div");
+        card.classList.add("card-imovel");
+
+        card.innerHTML = `
+            <img class="card-img" src="${primeiraImg}">
+            <h3>${imovel.nome_casa}</h3>
+            <p><strong>R$ ${Number(imovel.preco).toLocaleString()}</strong></p>
+            <p>${imovel.cidade} - ${imovel.estado}</p>
+
+            <div class="btns">
+                <button onclick="editar(${imovel.id_imovel})">Editar</button>
+                <button onclick="excluir(${imovel.id_imovel})">Excluir</button>
+            </div>
+        `;
+
+        cards.appendChild(card);
+    });
+}
+
+
+
+// converter BYTEA (array buffer) → base64
+function arrayBufferToBase64(buffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+
+    for (let b of bytes) {
+        binary += String.fromCharCode(b);
+    }
+
+    return window.btoa(binary);
+}
+
+
+
+async function excluir(id) {
+    if (!confirm("Deseja excluir?")) return;
+
+    await fetch(`${API}/imovel/${id}`, { method: "DELETE" });
+    carregarImoveis();
+}
+
+
+async function editar(id) {
+    const modal = document.getElementById("modalEditar");
+    const form = document.getElementById("formEditar");
+
+    const imovel = await fetch(`${API}/imovel/${id}`).then(r => r.json());
+
+    form.nome_casa.value = imovel.nome_casa;
+    form.rua.value = imovel.rua;
+    form.bairro.value = imovel.bairro;
+    form.numero.value = imovel.numero;
+    form.cidade.value = imovel.cidade;
+    form.estado.value = imovel.estado;
+    form.preco.value = imovel.preco;
+
+    document.getElementById("tipo_moradia_editar").value = imovel.tipo_moradia;
+    document.getElementById("finalidade_editar").value = imovel.finalidade;
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+
+        const dados = Object.fromEntries(new FormData(form).entries());
+
+        await fetch(`${API}/imovel/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dados)
+        });
+
+        modal.close();
         carregarImoveis();
-      } catch (err) {
-        console.error(err);
-        alert("Erro ao publicar o anúncio.");
-      }
     };
 
-    // ==============================
-    // 📦 CARREGAR IMÓVEIS
-    // ==============================
-    async function carregarImoveis() {
-      try {
-        const user = localStorage.getItem("user");
-        if (!user) {
-          alert("Você precisa estar logado!");
-          return;
-        }
+    modal.showModal();
+}
 
-        const ehAdmin = ADMINS.includes(user);
-        const imoveis = await (await fetch(`${API_URL}/imoveis`)).json();
-        const imagens = await (await fetch(`${API_URL}/fotos_casa`)).json();
 
-        cardContainer.innerHTML = "";
 
-        const imoveisFiltrados = ehAdmin
-          ? imoveis
-          : imoveis.filter((i) => i.usuario === user);
 
-        if (imoveisFiltrados.length === 0) {
-          cardContainer.innerHTML = "<p style='color:gray'>Nenhum imóvel encontrado.</p>";
-          return;
-        }
-
-        imoveisFiltrados.forEach((casa) => {
-          const imagensDaCasa = imagens.filter(
-            (img) => Number(img.id_imovel) === Number(casa.id_imovel)
-          );
-
-          let src = "../img/no-image.jpg";
-          if (imagensDaCasa.length > 0) {
-            src = `data:${imagensDaCasa[0].mimetype};base64,${imagensDaCasa[0].data}`;
-          }
-
-          const card = document.createElement("div");
-          card.classList.add("card-imovel");
-
-          const podeEditar = ehAdmin || casa.usuario === user;
-
-          card.innerHTML = `
-            <img src="${src}" alt="${casa.nome_casa}">
-            <h3>${casa.nome_casa}</h3>
-            <p>${casa.cidade} - ${casa.estado}</p>
-            <p><strong>R$ ${Number(casa.preco).toLocaleString("pt-BR")}</strong></p>
-            <div class="acoes">
-              <button class="btn-editar" data-id="${casa.id_imovel}" ${!podeEditar ? "disabled style='opacity:0.5;cursor:not-allowed'" : ""}>✏️ Editar</button>
-              <button class="btn-excluir" data-id="${casa.id_imovel}" ${!podeEditar ? "disabled style='opacity:0.5;cursor:not-allowed'" : ""}>🗑️ Excluir</button>
-            </div>
-          `;
-
-          cardContainer.appendChild(card);
-        });
-
-        document.querySelectorAll(".btn-editar").forEach((btn) => {
-          if (!btn.disabled) btn.addEventListener("click", () => abrirModalEditar(btn.dataset.id));
-        });
-
-        document.querySelectorAll(".btn-excluir").forEach((btn) => {
-          if (!btn.disabled) btn.addEventListener("click", () => excluirImovel(btn.dataset.id));
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    // ==============================
-    // 📝 EDITAR
-    // ==============================
-    async function abrirModalEditar(id) {
-      try {
-        const res = await fetch(`${API_URL}/imovel/${id}`);
-        const casa = await res.json();
-
-        for (let campo of formEditar.elements) {
-          if (campo.name && casa[campo.name] !== undefined) {
-            campo.value = casa[campo.name];
-          }
-        }
-
-        formEditar.dataset.id = id;
-        modalEditar.showModal();
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    formEditar.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const id = formEditar.dataset.id;
-      const dados = {};
-
-      for (let campo of formEditar.elements) {
-        if (campo.name) dados[campo.name] = campo.value;
-      }
-
-      await fetch(`${API_URL}/imovel/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados),
-      });
-
-      modalEditar.close();
-      carregarImoveis();
-    });
-
-    // ==============================
-    // ❌ DELETAR
-    // ==============================
-    async function excluirImovel(id) {
-      if (!confirm("Deseja realmente excluir este imóvel?")) return;
-      await fetch(`${API_URL}/imovel/${id}`, { method: "DELETE" });
-      alert("Imóvel excluído com sucesso!");
-      carregarImoveis();
-    }
-
-    carregarImoveis();
-  });
+document.addEventListener("DOMContentLoaded", carregarImoveis);

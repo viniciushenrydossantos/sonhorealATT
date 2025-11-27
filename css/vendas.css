@@ -600,4 +600,83 @@ input:focus, select:focus, textarea:focus {
   #cardContainer {
     grid-template-columns: 1fr;
   }
+}/* --- HAMBÚRGUER FIXO NA DIREITA — NÃO MEXE NA LOGO --- */
+.hamburger-wrapper {
+  position: absolute;
+  right: 35px;      /* distância da direita */
+  top: 10px;        /* quanto menor, mais para cima */
+  display: flex;
+  align-items: center;
+  z-index: 9999;
+  /* transform removido para não centralizar verticalmente */
+}
+
+
+/* Ícone do menu */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 3px;
+  background: #000;
+  border-radius: 4px;
+}
+
+/* Esconde checkbox */
+#menu-toggle {
+  display: none;
+}
+
+/* Menu lateral que abre na direita */
+.menu-mobile {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: #fff;
+  width: 190px;
+  padding: 15px;
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  z-index: 900;
+}
+/* Quando o toggle é clicado → aparece */
+#menu-toggle:checked ~ .menu-mobile {
+  display: flex;
+}
+/* Organização dos links */
+.menu-mobile nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;    /* espaçamento entre os itens */
+}
+
+/* Estilo dos itens da lista */
+.menu-mobile a,
+.menu-mobile button {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  background: #f7f7f7;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #333;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* Hover bonito */
+.menu-mobile a:hover,
+.menu-mobile button:hover {
+  background: #ececec;
 }
