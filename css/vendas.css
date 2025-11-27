@@ -284,23 +284,55 @@ input:focus, select:focus, textarea:focus {
   font-size: 0.9rem;
   transition: all 0.2s ease-in-out;
 }
-
-.btn-editar {
-  background: #007bff;
-  color: #fff;
+/* Estilo para os botões de editar e excluir */
+.card-imovel .btns {
+    display: flex;
+    justify-content: center;  /* Centraliza os botões horizontalmente */
+    align-items: center;      /* Centraliza os botões verticalmente */
+    gap: 15px;                /* Espaço entre os botões */
+    margin-top: 15px;         /* Espaçamento superior */
 }
 
-.btn-editar:hover {
-  background: #0056d8;
+.card-imovel .btns button {
+    background: linear-gradient(135deg, #4CAF50, #45a049); /* Gradiente verde para o botão de Editar */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;  /* Bordas arredondadas */
+    cursor: pointer;
+    transition: all 0.3s ease;  /* Transição suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center;  /* Garante que o texto fique bem posicionado */
 }
 
-.btn-excluir {
-  background: #ff4c4c;
-  color: #fff;
+/* Botão de excluir */
+.card-imovel .btns button:nth-child(2) {
+    background: linear-gradient(135deg, #e74c3c, #c0392b); /* Gradiente vermelho para o botão de Excluir */
 }
 
-.btn-excluir:hover {
-  background: #d93636;
+/* Efeito de hover nos botões */
+.card-imovel .btns button:hover {
+    transform: translateY(-3px); /* Efeito de levitação no hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta a sombra ao passar o mouse */
+}
+
+/* Efeito de foco nos botões */
+.card-imovel .btns button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.2); /* Foco com sombra suave */
+}
+
+/* Efeito de clique nos botões */
+.card-imovel .btns button:active {
+    transform: translateY(2px); /* Efeito de pressionar os botões */
+    background: linear-gradient(135deg, #388e3c, #2e7d32); /* Cor mais escura no clique */
+}
+
+/* Efeito de hover para o botão excluir */
+.card-imovel .btns button:nth-child(2):hover {
+    background: linear-gradient(135deg, #c0392b, #e74c3c); /* Escurece a cor do botão Excluir ao passar o mouse */
 }
 
 /* RESPONSIVO */

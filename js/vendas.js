@@ -211,6 +211,61 @@ async function editar(id) {
     modal.showModal();
 }
 
+ // ============================================
+  // 👤 UI DO USUÁRIO LOGADO
+  // ============================================
+  function setUserUI(userEmail) {
+    const btnLogin = document.getElementById("btn-signup");
+    if (!btnLogin) return;
+
+    const profileDiv = document.createElement("div");
+    Object.assign(profileDiv.style, {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      background: "var(--btn-bg)",
+      padding: "6px 12px",
+      borderRadius: "12px",
+      color: "#fff",
+      fontWeight: "600",
+      fontFamily: "'Poppins', sans-serif",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+    });
+
+    const icon = document.createElement("span");
+    icon.textContent = "👤";
+    icon.style.fontSize = "18px";
+
+    const name = document.createElement("span");
+    name.textContent = userEmail.split("@")[0];
+    name.style.color = "#b50affff";
+    name.style.textShadow = "0 0 4px rgba(153, 152, 153, 0.86)";
+
+    const logoutBtn = document.createElement("button");
+    logoutBtn.textContent = "Sair";
+    Object.assign(logoutBtn.style, {
+      background: "var(--accent)",
+      border: "none",
+      color: "#fff",
+      padding: "4px 10px",
+      borderRadius: "8px",
+      cursor: "pointer",
+      fontWeight: "600",
+      transition: "0.2s"
+    });
+    logoutBtn.addEventListener("mouseenter", () => logoutBtn.style.opacity = "0.8");
+    logoutBtn.addEventListener("mouseleave", () => logoutBtn.style.opacity = "1");
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("user");
+      location.reload();
+    });
+
+    profileDiv.append(icon, name, logoutBtn);
+    btnLogin.replaceWith(profileDiv);
+  }
+
+  const loggedUser = localStorage.getItem("user");
+  if (loggedUser) setUserUI(loggedUser);
 
 
 
